@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { TextInput } from '../componant-objects/TextInput'
+import { ToDoItem } from '../componant-objects/ToDoItem'
 
 test.beforeEach('go to todo app', async({ page }) => {
     await page.goto('/examples/react/dist')
@@ -7,9 +8,9 @@ test.beforeEach('go to todo app', async({ page }) => {
 
 test.only('Can create todo item', async({ page }) => {
     const textInput = new TextInput(page)
+    const toDoItem = new ToDoItem(page)
     
     await textInput.createToDoItem('my first todo')
-    const toDoItem = await page.locator('[data-testid="todo-item-label"]')
-    await expect(toDoItem).toBeVisible()
+    await expect(toDoItem.itemLabel).toBeVisible()
     await page.pause()
 })
