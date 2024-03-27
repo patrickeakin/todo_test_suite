@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
-import { TextInput } from '../componant-objects/TextInput'
-import { ToDoItem } from '../componant-objects/ToDoItem'
+import { TextInput } from '../component-objects/TextInput'
+import { ToDoItem } from '../component-objects/ToDoItem'
 
 test.beforeEach('go to todo app', async({ page }) => {
     await page.goto('/examples/react/dist')
