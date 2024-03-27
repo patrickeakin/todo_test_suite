@@ -4,7 +4,7 @@ export class TextInput {
     constructor(page) {
         this.page = page
 
-        this.input = page.locator('[data-testid="text-input"]')
+        this.input = page.getByPlaceholder('What needs to be done?')
     }
 
     createToDoItem = async (toDoTitle) => {
