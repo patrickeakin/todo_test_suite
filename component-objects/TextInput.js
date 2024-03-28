@@ -1,5 +1,3 @@
-import { ToDoItem } from "./ToDoItem"
-
 export class TextInput {
     constructor(page) {
         this.page = page
@@ -10,6 +8,5 @@ export class TextInput {
     createToDoItem = async (toDoTitle) => {
         await this.input.fill(toDoTitle)
         await this.input.press('Enter')
-        return new ToDoItem(this.page)
     }
 }
