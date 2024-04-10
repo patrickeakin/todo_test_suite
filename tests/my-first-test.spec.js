@@ -7,6 +7,7 @@ test.beforeEach('go to todo app', async({ page }) => {
 })
 
 const itemTitles = [ '1st item', '2nd item' ]
+
 const createToDos = async (page) => {
     const textInput = new TextInput(page)
     await textInput.createToDoItem(itemTitles[0])
@@ -15,8 +16,7 @@ const createToDos = async (page) => {
 }
 
 test('Can create todo items', async({ page }) => {
-    const textInput = await createToDos(page)
-
+    await createToDos(page)
     const toDoItem = new ToDoItem(page)
     await expect(toDoItem.itemLabel).toHaveText(itemTitles)
 })
