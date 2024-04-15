@@ -91,3 +91,14 @@ test('Save edits on blur', async({ page }) => {
     await firstItem.getByRole('textbox').blur()
     await expect(firstItem).toHaveText('Edited')
 })
+
+test('Trims leading and trailing spaces', async({ page }) => {
+    const toDoItem = new ToDoItem(page)
+    const firstItem = await toDoItem.item.first()
+    await expect(firstItem).toHaveText(itemTitles[0])
+
+    await firstItem.dblclick()
+    await firstItem.getByRole('textbox').fill(' Trim spaces ')
+    await firstItem.getByRole('textbox').press('Enter')
+    await expect(firstItem).toHaveText('Trim spaces')
+})
