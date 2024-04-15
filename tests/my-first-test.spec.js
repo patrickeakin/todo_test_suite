@@ -13,28 +13,28 @@ const createToDos = async (page) => {
     const textInput = new TextInput(page)
     await textInput.createToDoItem(itemTitles[0])
     await textInput.createToDoItem(itemTitles[1])
-    return textInput
 }
 
-test('Can create todo items', async({ page }) => {
+test.beforeEach(async({ page }) => {
     await createToDos(page)
+})
+
+test('Can create todo items', async({ page }) => {
     const toDoItem = new ToDoItem(page)
     await expect(toDoItem.itemLabel).toHaveText(itemTitles)
 })
 
 test('Text field is clear after adding item', async({ page }) => {
-    const textInput = await createToDos(page)
+    const textInput = new TextInput(page)
     await expect(textInput.input).toBeEmpty()
 })
 
 test('New items go to the bottom of the list', async({ page }) => {
-    await createToDos(page)
     const lastToDoText = await page.getByTestId('todo-title').last().innerText()
     await expect(lastToDoText).toBe(itemTitles[1])
 })
 
 test('Mark all items as complete', async({ page }) => {
-    await createToDos(page)
     const toDoItem = new ToDoItem(page)
     const main = new Main(page)
     await main.markAllCompleteToggle.click()
@@ -42,7 +42,6 @@ test('Mark all items as complete', async({ page }) => {
 })
 
 test('Unmark all as complete', async({ page }) => {
-    await createToDos(page)
     const toDoItem = new ToDoItem(page)
     const main = new Main(page)
     await main.markAllCompleteToggle.click()
@@ -53,14 +52,12 @@ test('Unmark all as complete', async({ page }) => {
 })
 
 test('Mark item as complete', async({ page }) => {
-    await createToDos(page)
     const toDoItem = new ToDoItem(page)
     await toDoItem.completeToggle.first().click()
     await expect(toDoItem.item.first()).toHaveClass('completed')
 })
 
 test('Unark item as complete', async({ page }) => {
-    await createToDos(page)
     const toDoItem = new ToDoItem(page)
     await toDoItem.completeToggle.first().click()
     await expect(toDoItem.item.first()).toHaveClass('completed')
@@ -70,7 +67,6 @@ test('Unark item as complete', async({ page }) => {
 })
 
 test('Edit item text', async({ page }) => {
-    await createToDos(page)
     const toDoItem = new ToDoItem(page)
     const firstItem = await toDoItem.item.first()
     await expect(firstItem).toHaveText(itemTitles[0])
