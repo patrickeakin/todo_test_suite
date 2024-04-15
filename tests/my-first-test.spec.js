@@ -130,3 +130,12 @@ test('Todo counter displays number of incomplete todos', async({ page }) => {
     await main.markAllCompleteToggle.click()
     await expect(footer.counter).toHaveText('0 items left')
 })
+
+test.only('Can clear completed todos', async({ page }) => {
+    const footer = new Footer(page)
+    const main = new Main(page)
+    const toDoItem = new ToDoItem(page)
+    await main.markAllCompleteToggle.click()
+    await footer.clearCompletedBtn.click()
+    await expect(toDoItem.item).toBeHidden()
+})
