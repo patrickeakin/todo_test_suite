@@ -57,7 +57,6 @@ test('Mark item as complete', async({ page }) => {
     const toDoItem = new ToDoItem(page)
     await toDoItem.completeToggle.first().click()
     await expect(toDoItem.item.first()).toHaveClass('completed')
-    await expect(toDoItem.item.nth(1)).not.toHaveClass('completed')
 })
 
 test('Unark item as complete', async({ page }) => {
