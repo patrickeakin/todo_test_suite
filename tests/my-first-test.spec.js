@@ -76,3 +76,12 @@ test('Edit item text', async({ page }) => {
     await firstItem.getByRole('textbox').press('Enter')
     await expect(firstItem).toHaveText('Edited')
 })
+
+test.only('Hide complete toggle when editing', async({ page }) => {
+    const toDoItem = new ToDoItem(page)
+    const firstItem = await toDoItem.item.first()
+    await expect(toDoItem.completeToggle.first()).toBeVisible()
+    
+    await firstItem.dblclick()
+    await expect(toDoItem.completeToggle.first()).toBeHidden()
+})
