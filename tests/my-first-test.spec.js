@@ -68,3 +68,15 @@ test('Unark item as complete', async({ page }) => {
     await toDoItem.completeToggle.first().click()
     await expect(toDoItem.item.first()).not.toHaveClass('completed')
 })
+
+test('Edit item text', async({ page }) => {
+    await createToDos(page)
+    const toDoItem = new ToDoItem(page)
+    const firstItem = await toDoItem.item.first()
+    await expect(firstItem).toHaveText(itemTitles[0])
+
+    await firstItem.dblclick()
+    await firstItem.getByRole('textbox').fill('Edited')
+    await firstItem.getByRole('textbox').press('Enter')
+    await expect(firstItem).toHaveText('Edited')
+})
