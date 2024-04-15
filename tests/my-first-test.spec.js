@@ -80,3 +80,14 @@ test('Hide complete toggle when editing', async({ page }) => {
     await firstItem.dblclick()
     await expect(toDoItem.completeToggle.first()).toBeHidden()
 })
+
+test('Save edits on blur', async({ page }) => {
+    const toDoItem = new ToDoItem(page)
+    const firstItem = await toDoItem.item.first()
+    await expect(firstItem).toHaveText(itemTitles[0])
+
+    await firstItem.dblclick()
+    await firstItem.getByRole('textbox').fill('Edited')
+    await firstItem.getByRole('textbox').blur()
+    await expect(firstItem).toHaveText('Edited')
+})
