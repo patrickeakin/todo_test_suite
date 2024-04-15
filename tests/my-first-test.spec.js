@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test'
 import { TextInput } from '../component-objects/TextInput'
 import { ToDoItem } from "../component-objects/ToDoItem"
 import { Main } from '../component-objects/Main'
+import { createToDos } from '../utils/create-todos'
 
 test.beforeEach('go to todo app', async({ page }) => {
     await page.goto('/todomvc')
@@ -9,14 +10,8 @@ test.beforeEach('go to todo app', async({ page }) => {
 
 const itemTitles = [ '1st item', '2nd item' ]
 
-const createToDos = async (page) => {
-    const textInput = new TextInput(page)
-    await textInput.createToDoItem(itemTitles[0])
-    await textInput.createToDoItem(itemTitles[1])
-}
-
 test.beforeEach(async({ page }) => {
-    await createToDos(page)
+    await createToDos(page, itemTitles)
 })
 
 test('Can create todo items', async({ page }) => {
@@ -77,7 +72,7 @@ test('Edit item text', async({ page }) => {
     await expect(firstItem).toHaveText('Edited')
 })
 
-test.only('Hide complete toggle when editing', async({ page }) => {
+test('Hide complete toggle when editing', async({ page }) => {
     const toDoItem = new ToDoItem(page)
     const firstItem = await toDoItem.item.first()
     await expect(toDoItem.completeToggle.first()).toBeVisible()
