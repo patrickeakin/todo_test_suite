@@ -102,3 +102,14 @@ test('Trims leading and trailing spaces', async({ page }) => {
     await firstItem.getByRole('textbox').press('Enter')
     await expect(firstItem).toHaveText('Trim spaces')
 })
+
+test('Cancel edits on escape', async({ page }) => {
+    const toDoItem = new ToDoItem(page)
+    const firstItem = await toDoItem.item.first()
+    await expect(firstItem).toHaveText(itemTitles[0])
+
+    await firstItem.dblclick()
+    await firstItem.getByRole('textbox').fill('Edited')
+    await firstItem.getByRole('textbox').press('Escape')
+    await expect(firstItem).toHaveText(itemTitles[0])
+})
