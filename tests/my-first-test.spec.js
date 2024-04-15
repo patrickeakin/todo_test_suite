@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test'
 import { TextInput } from '../component-objects/TextInput'
 import { ToDoItem } from "../component-objects/ToDoItem"
 import { Main } from '../component-objects/Main'
+import { Footer } from '../component-objects/Footer'
 import { createToDos } from '../utils/create-todos'
 
 test.beforeEach('go to todo app', async({ page }) => {
@@ -112,4 +113,20 @@ test('Cancel edits on escape', async({ page }) => {
     await firstItem.getByRole('textbox').fill('Edited')
     await firstItem.getByRole('textbox').press('Escape')
     await expect(firstItem).toHaveText(itemTitles[0])
+})
+
+test('Todo counter displays number of incomplete todos', async({ page }) => {
+    const footer = new Footer(page)
+    const main = new Main(page)
+    const toDoItem = new ToDoItem(page)
+    await expect(footer.counter).toHaveText('2 items left')
+
+    await createToDos(page, ['3rd item'])
+    await expect(footer.counter).toHaveText('3 items left')
+
+    await toDoItem.completeToggle.first().click()
+    await expect(footer.counter).toHaveText('2 items left')
+
+    await main.markAllCompleteToggle.click()
+    await expect(footer.counter).toHaveText('0 items left')
 })
