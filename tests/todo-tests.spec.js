@@ -16,32 +16,32 @@ test.beforeEach(async({ page }) => {
 })
 
 test.describe('New todo items', () => {
-    test('Can create todo items', async({ page }) => {
+    test('can be created', async({ page }) => {
         const toDoItem = new ToDoItem(page)
         await expect(toDoItem.itemLabel).toHaveText(itemTitles)
     })
     
-    test('Text field is clear after adding item', async({ page }) => {
+    test('input field is clear after adding item', async({ page }) => {
         const textInput = new TextInput(page)
         await expect(textInput.input).toBeEmpty()
     })
     
-    test('New items go to the bottom of the list', async({ page }) => {
+    test('go to the bottom of the list', async({ page }) => {
         const toDoItem = new ToDoItem(page)
         const lastToDoText = await toDoItem.item.last().innerText()
         await expect(lastToDoText).toBe(itemTitles[1])
     })
 })
 
-test.describe('Mark todo items complete', () => {
-    test('Mark all items as complete', async({ page }) => {
+test.describe('Mark all complete toggle', () => {
+    test('marks all items as complete', async({ page }) => {
         const toDoItem = new ToDoItem(page)
         const main = new Main(page)
         await main.markAllCompleteToggle.click()
         await expect(toDoItem.item).toHaveClass(['completed', 'completed'])
     })
     
-    test('Unmark all as complete', async({ page }) => {
+    test('unmarks all items as complete', async({ page }) => {
         const toDoItem = new ToDoItem(page)
         const main = new Main(page)
         await main.markAllCompleteToggle.click()
@@ -50,14 +50,16 @@ test.describe('Mark todo items complete', () => {
         await main.markAllCompleteToggle.click()
         await expect(toDoItem.item).not.toHaveClass(['completed', 'completed'])
     })
-    
-    test('Mark item as complete', async({ page }) => {
+})
+
+test.describe('Mark item complete toggle', () => {
+    test('marks an item as complete', async({ page }) => {
         const toDoItem = new ToDoItem(page)
         await toDoItem.completeToggle.first().click()
         await expect(toDoItem.item.first()).toHaveClass('completed')
     })
     
-    test('Unark item as complete', async({ page }) => {
+    test('unarks an item as complete', async({ page }) => {
         const toDoItem = new ToDoItem(page)
         await toDoItem.completeToggle.first().click()
         await expect(toDoItem.item.first()).toHaveClass('completed')
@@ -68,35 +70,35 @@ test.describe('Mark todo items complete', () => {
 })
 
 test.describe('Editing todo items', () => {
-    test('Edit item text', async({ page }) => {
+    test('can edit item text', async({ page }) => {
         const toDoItem = new ToDoItem(page)
         await toDoItem.editToDoText(0, 'Edited', 'Enter')
         const firstItem = await toDoItem.nth(0)
         await expect(firstItem).toHaveText('Edited')
     })
     
-    test('Save edits on blur', async({ page }) => {
+    test('saves edits on blur', async({ page }) => {
         const toDoItem = new ToDoItem(page)
         await toDoItem.editToDoText(0, 'Edited', 'blur')
         const firstItem = await toDoItem.nth(0)
         await expect(firstItem).toHaveText('Edited')
     })
     
-    test('Trims leading and trailing spaces', async({ page }) => {
+    test('trims leading and trailing spaces after saving', async({ page }) => {
         const toDoItem = new ToDoItem(page)
         await toDoItem.editToDoText(0, ' Trim spaces ', 'Enter')
         const firstItem = await toDoItem.nth(0)
         await expect(firstItem).toHaveText('Trim spaces')
     })
     
-    test('Cancel edits on escape', async({ page }) => {
+    test('cancels edits on escape', async({ page }) => {
         const toDoItem = new ToDoItem(page)
         await toDoItem.editToDoText(0, 'Edited', 'Escape')
         const firstItem = await toDoItem.nth(0)
         await expect(firstItem).toHaveText(itemTitles[0])
     })
     
-    test('Hide complete toggle when editing', async({ page }) => {
+    test('hides the complete item toggle when editing', async({ page }) => {
         const toDoItem = new ToDoItem(page)
         const firstItem = await toDoItem.item.first()
         await expect(toDoItem.completeToggle.first()).toBeVisible()
@@ -107,12 +109,12 @@ test.describe('Editing todo items', () => {
 })
 
 test.describe('Todo item counter', () => {
-    test('Todo counter displays number of incomplete todos', async({ page }) => {
+    test('displays number of incomplete todos', async({ page }) => {
         const footer = new Footer(page)
         await expect(footer.counter).toHaveText('2 items left')
     })
 
-    test('New todo increments counter', async({ page }) => {
+    test('increments when new item is created', async({ page }) => {
         const footer = new Footer(page)
         await expect(footer.counter).toHaveText('2 items left')
     
@@ -120,7 +122,7 @@ test.describe('Todo item counter', () => {
         await expect(footer.counter).toHaveText('3 items left')
     })
 
-    test('Completeing a todo decrements counter', async({ page }) => {
+    test('decrements when an item is completed', async({ page }) => {
         const footer = new Footer(page)
         const main = new Main(page)
         const toDoItem = new ToDoItem(page)
@@ -135,7 +137,7 @@ test.describe('Todo item counter', () => {
 })
 
 test.describe('Clear completed button', () => {
-    test('Can clear completed todos', async({ page }) => {
+    test('clears completed todos', async({ page }) => {
         const footer = new Footer(page)
         const main = new Main(page)
         const toDoItem = new ToDoItem(page)
