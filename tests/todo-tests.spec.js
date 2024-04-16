@@ -119,6 +119,14 @@ test.describe('Editing todo items', () => {
         await firstItem.dblclick()
         await expect(toDoItem.completeToggle.first()).toBeHidden()
     })
+
+    test('removes item if empty string is entered', async({ page }) => {
+        const toDoItem = new ToDoItem(page)
+        await expect(toDoItem.item).toHaveCount(2)
+
+        await toDoItem.editToDoText(0, '', 'Enter')
+        await expect(toDoItem.item).toHaveCount(1)
+    })
 })
 
 test.describe('Todo item counter', () => {
