@@ -37,30 +37,30 @@ test.describe('Mark all complete toggle', () => {
     test('marks all items as complete', async({ page }) => {
         const toDoItem = new ToDoItem(page)
         const main = new Main(page)
-        await main.markAllCompleteToggle.click()
+        await main.markAllCompleteToggle.check()
         await expect(toDoItem.item).toHaveClass(['completed', 'completed'])
     })
     
     test('unmarks all items as complete', async({ page }) => {
         const toDoItem = new ToDoItem(page)
         const main = new Main(page)
-        await main.markAllCompleteToggle.click()
+        await main.markAllCompleteToggle.check()
         await expect(toDoItem.item).toHaveClass(['completed', 'completed'])
     
-        await main.markAllCompleteToggle.click()
+        await main.markAllCompleteToggle.uncheck()
         await expect(toDoItem.item).not.toHaveClass(['completed', 'completed'])
     })
 
     test('updates state when items are toggled complete / not complete', async({ page }) => {
         const toDoItem = new ToDoItem(page)
         const main = new Main(page)
-        await main.markAllCompleteToggle.click()
+        await main.markAllCompleteToggle.check()
         await expect(main.markAllCompleteToggle).toBeChecked()
 
-        await toDoItem.completeToggle.first().click()
+        await toDoItem.completeToggle.first().uncheck()
         await expect(main.markAllCompleteToggle).not.toBeChecked()
 
-        await toDoItem.completeToggle.first().click()
+        await toDoItem.completeToggle.first().check()
         await expect(main.markAllCompleteToggle).toBeChecked()
     })
 })
@@ -68,16 +68,16 @@ test.describe('Mark all complete toggle', () => {
 test.describe('Mark item complete toggle', () => {
     test('marks an item as complete', async({ page }) => {
         const toDoItem = new ToDoItem(page)
-        await toDoItem.completeToggle.first().click()
+        await toDoItem.completeToggle.first().check()
         await expect(toDoItem.item.first()).toHaveClass('completed')
     })
     
     test('unarks an item as complete', async({ page }) => {
         const toDoItem = new ToDoItem(page)
-        await toDoItem.completeToggle.first().click()
+        await toDoItem.completeToggle.first().check()
         await expect(toDoItem.item.first()).toHaveClass('completed')
     
-        await toDoItem.completeToggle.first().click()
+        await toDoItem.completeToggle.first().uncheck()
         await expect(toDoItem.item.first()).not.toHaveClass('completed')
     })
 })
@@ -141,10 +141,10 @@ test.describe('Todo item counter', () => {
         const toDoItem = new ToDoItem(page)
         await expect(footer.counter).toHaveText('2 items left')
 
-        await toDoItem.completeToggle.first().click()
+        await toDoItem.completeToggle.first().check()
         await expect(footer.counter).toHaveText('1 item left')
     
-        await main.markAllCompleteToggle.click()
+        await main.markAllCompleteToggle.check()
         await expect(footer.counter).toHaveText('0 items left')
     })
 })
@@ -154,7 +154,7 @@ test.describe('Clear completed button', () => {
         const footer = new Footer(page)
         const main = new Main(page)
         const toDoItem = new ToDoItem(page)
-        await main.markAllCompleteToggle.click()
+        await main.markAllCompleteToggle.check()
         await footer.clearCompletedBtn.click()
         await expect(toDoItem.item).toBeHidden()
     })
