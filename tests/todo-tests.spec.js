@@ -5,11 +5,11 @@ import { Main } from '../component-objects/Main'
 import { Footer } from '../component-objects/Footer'
 import { createToDos } from '../utils/create-todos'
 
+const itemTitles = [ '1st item', '2nd item' ]
+
 test.beforeEach('go to todo app', async({ page }) => {
     await page.goto('/todomvc')
 })
-
-const itemTitles = [ '1st item', '2nd item' ]
 
 test.beforeEach(async({ page }) => {
     await createToDos(page, itemTitles)
