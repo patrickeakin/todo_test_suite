@@ -166,4 +166,14 @@ test.describe('Clear completed button', () => {
         await footer.clearCompletedBtn.click()
         await expect(toDoItem.item).toBeHidden()
     })
+
+    test('should be hidden when no items are completed', async ({ page }) => {
+        const footer = new Footer(page)
+        const main = new Main(page)
+        await main.markAllCompleteToggle.check()
+        await expect(footer.clearCompletedBtn).toBeVisible()
+
+        await main.markAllCompleteToggle.uncheck()
+        await expect(footer.clearCompletedBtn).toBeHidden()
+    })
 })
