@@ -131,7 +131,7 @@ test('Todo counter displays number of incomplete todos', async({ page }) => {
     await expect(footer.counter).toHaveText('0 items left')
 })
 
-test.only('Can clear completed todos', async({ page }) => {
+test('Can clear completed todos', async({ page }) => {
     const footer = new Footer(page)
     const main = new Main(page)
     const toDoItem = new ToDoItem(page)
