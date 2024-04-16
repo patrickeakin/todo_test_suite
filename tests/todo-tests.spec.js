@@ -50,6 +50,19 @@ test.describe('Mark all complete toggle', () => {
         await main.markAllCompleteToggle.click()
         await expect(toDoItem.item).not.toHaveClass(['completed', 'completed'])
     })
+
+    test('updates state when items are toggled complete / not complete', async({ page }) => {
+        const toDoItem = new ToDoItem(page)
+        const main = new Main(page)
+        await main.markAllCompleteToggle.click()
+        await expect(main.markAllCompleteToggle).toBeChecked()
+
+        await toDoItem.completeToggle.first().click()
+        await expect(main.markAllCompleteToggle).not.toBeChecked()
+
+        await toDoItem.completeToggle.first().click()
+        await expect(main.markAllCompleteToggle).toBeChecked()
+    })
 })
 
 test.describe('Mark item complete toggle', () => {
