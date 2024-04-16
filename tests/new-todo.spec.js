@@ -23,6 +23,6 @@ test.describe('New todo items', () => {
     test('go to the bottom of the list', async({ page }) => {
         const toDoItem = new ToDoItem(page)
         const lastToDoText = await toDoItem.item.last().innerText()
-        await expect(lastToDoText).toBe(itemTitles[1])
+        expect(lastToDoText).toBe(itemTitles[1])
     })
 })
