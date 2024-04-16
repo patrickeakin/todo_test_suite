@@ -1,0 +1,1 @@
+The Playwright library comes with an example test suite run on a single page ToDo web application. In this project I've reimplimented those tests to be succinct and readable. Since this is a single page React app I created componant objects instead of page objects to keep selectors, functions and componant specific data organized and abstracted.
