@@ -5,7 +5,6 @@ export class ToDoItem {
         this.item = page.getByTestId('todo-item')
         this.itemLabel = page.getByTestId('todo-title')
         this.completeToggle = page.getByLabel('Toggle Todo')
-        this.textBox = page.getByRole('textbox')
     }
 
     editToDoText = async (index, text, action) => {
