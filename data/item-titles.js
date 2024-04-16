@@ -1,0 +1,1 @@
+export const itemTitles = [ '1st item', '2nd item' ]

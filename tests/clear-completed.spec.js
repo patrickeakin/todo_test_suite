@@ -3,8 +3,7 @@ import { ToDoItem } from "../component-objects/ToDoItem"
 import { Main } from '../component-objects/Main'
 import { Footer } from '../component-objects/Footer'
 import { createToDos } from '../utils/create-todos'
-
-const itemTitles = [ '1st item', '2nd item' ]
+import { itemTitles } from '../data/item-titles'
 
 test.beforeEach('go to todo app', async({ page }) => {
     await page.goto('/todomvc')
