@@ -26,7 +26,8 @@ test('Text field is clear after adding item', async({ page }) => {
 })
 
 test('New items go to the bottom of the list', async({ page }) => {
-    const lastToDoText = await page.getByTestId('todo-title').last().innerText()
+    const toDoItem = new ToDoItem(page)
+    const lastToDoText = await toDoItem.item.last().innerText()
     await expect(lastToDoText).toBe(itemTitles[1])
 })
 
@@ -64,12 +65,8 @@ test('Unark item as complete', async({ page }) => {
 
 test('Edit item text', async({ page }) => {
     const toDoItem = new ToDoItem(page)
-    const firstItem = await toDoItem.item.first()
-    await expect(firstItem).toHaveText(itemTitles[0])
-
-    await firstItem.dblclick()
-    await firstItem.getByRole('textbox').fill('Edited')
-    await firstItem.getByRole('textbox').press('Enter')
+    await toDoItem.editToDoText(0, 'Edited', 'Enter')
+    const firstItem = await toDoItem.nth(0)
     await expect(firstItem).toHaveText('Edited')
 })
 
@@ -84,34 +81,22 @@ test('Hide complete toggle when editing', async({ page }) => {
 
 test('Save edits on blur', async({ page }) => {
     const toDoItem = new ToDoItem(page)
-    const firstItem = await toDoItem.item.first()
-    await expect(firstItem).toHaveText(itemTitles[0])
-
-    await firstItem.dblclick()
-    await firstItem.getByRole('textbox').fill('Edited')
-    await firstItem.getByRole('textbox').blur()
+    await toDoItem.editToDoText(0, 'Edited', 'blur')
+    const firstItem = await toDoItem.nth(0)
     await expect(firstItem).toHaveText('Edited')
 })
 
 test('Trims leading and trailing spaces', async({ page }) => {
     const toDoItem = new ToDoItem(page)
-    const firstItem = await toDoItem.item.first()
-    await expect(firstItem).toHaveText(itemTitles[0])
-
-    await firstItem.dblclick()
-    await firstItem.getByRole('textbox').fill(' Trim spaces ')
-    await firstItem.getByRole('textbox').press('Enter')
+    await toDoItem.editToDoText(0, ' Trim spaces ', 'Enter')
+    const firstItem = await toDoItem.nth(0)
     await expect(firstItem).toHaveText('Trim spaces')
 })
 
 test('Cancel edits on escape', async({ page }) => {
     const toDoItem = new ToDoItem(page)
-    const firstItem = await toDoItem.item.first()
-    await expect(firstItem).toHaveText(itemTitles[0])
-
-    await firstItem.dblclick()
-    await firstItem.getByRole('textbox').fill('Edited')
-    await firstItem.getByRole('textbox').press('Escape')
+    await toDoItem.editToDoText(0, 'Edited', 'Escape')
+    const firstItem = await toDoItem.nth(0)
     await expect(firstItem).toHaveText(itemTitles[0])
 })
 
