@@ -9,9 +9,6 @@ const itemTitles = [ '1st item', '2nd item' ]
 
 test.beforeEach('go to todo app', async({ page }) => {
     await page.goto('/todomvc')
-})
-
-test.beforeEach(async({ page }) => {
     await createToDos(page, itemTitles)
 })
 
