@@ -4,5 +4,4 @@ export class Main {
 
         this.markAllCompleteToggle = page.getByText('Mark all as complete')
     }
-
 }
