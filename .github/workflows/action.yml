@@ -9,5 +9,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Say hello
-        run: echo Hello
+      - name: Run tests
+        run:
+          echo "Install dependencies"
+          npm install
+          echo "Run ToDo tests"
+          npm run test:ci
