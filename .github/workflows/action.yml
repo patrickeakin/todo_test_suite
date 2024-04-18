@@ -1,0 +1,13 @@
+name: ToDo Tests
+on:
+  push:
+    branches: master
+jobs:
+  todo_tests:
+    name: Run ToDo tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Say hello
+        run: echo Hello
