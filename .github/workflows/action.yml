@@ -1,0 +1,15 @@
+name: ToDo Tests
+on: push
+jobs:
+  todo_tests:
+    name: Run ToDo tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install dependencies
+        run: npm install
+      - name: Install playwright
+        run: npx playwright install chromium
+      - name: Run ToDo tests
+        run: npm run test:ci
