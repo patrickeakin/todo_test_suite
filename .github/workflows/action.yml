@@ -1,7 +1,5 @@
 name: ToDo Tests
-on:
-  push:
-    branches: github-workflow
+on: push
 jobs:
   todo_tests:
     name: Run ToDo tests
